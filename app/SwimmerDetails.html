@@ -29,23 +29,11 @@
             <div><strong>Born:</strong> {{swimmer.dateOfBirth}}</div>
             <div><strong>Club:</strong> {{swimmer.club}}</div>
           </div>
-          <div class="span4">
-            <address>
-              <strong>Address:</strong><br />
-              {{swimmer.location.address}}<br />
-              {{swimmer.location.city}}, {{swimmer.location.province}}
-            </address>
-          </div>
         </div>
         
         <hr>
         
         <h3>Personal bests</h3>
-        Order By:
-        <select name="" id="" ng-model="sortorder" class="input-small">
-          <option value="event.distance" selected>Distance</option>
-          <option value="date">Date</option>
-        </select>
         Show:
         <select name="" id="" ng-model="discipline" class="input-medium">
           <option value="" selected>All</option>
@@ -55,26 +43,14 @@
           <option value="Backstroke" >Backstroke</option>
         </select>
         <ul class="thumbnails">
-          <li ng-repeat="personalBest in swimmer.personalBests | orderBy:sortorder | limitTo:10 | filter:discipline">
-            
-            <div class="row session">
-              <!--<div class="span0 well votingWidget">
-                <div class="votingButton" ng-click="upVoteSession(session)">
-                  <i class="icon-chevron-up icon-white"></i>
-                </div>
-                <div class="badge badge-inverse">
-                  <div>{{session.upVoteCount}}</div>
-                </div>
-                <div class="votingButton" ng-click="downVoteSession(session)">
-                  <i class="icon-chevron-down"></i>
-                </div>
-              </div>-->
+          <li ng-repeat="personalBest in swimmer.personalBests | orderBy:pbSortOrder | limitTo:10 | filter:discipline">
+            <div class="row personalBest">
               <div class="well span9">
                 <h4 class="well-title">{{personalBest.event.distance}} {{personalBest.event.discipline}}</h4>
                 <!--<h6 style="margin-top:-10px">{{personalBest.event.discipline}}</h6>-->
                 <span>Time: {{personalBest.time}}</span><br />
                 <span>Competition: {{personalBest.competition}}</span><br />
-                <span>Level: {{personalBest.date}}</span>
+                <span>Date: {{personalBest.date}}</span>
               </div>
             </div>
           </li>

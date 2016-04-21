@@ -2,17 +2,11 @@
 
 swimmersApp.controller('SwimmerDetailsController',
   function SwimmerDetailsController($scope) {
-    $scope.sortorder = 'name';
     $scope.swimmer = {
       id: '1234',
       name: 'Elias Skeppstedt',
       dateOfBirth: '20030504',
       club: 'SSK',
-      location: {
-        address: 'Google Headquarters',
-        city: 'Mountain View',
-        province: 'CA'
-      },
       imageUrl: '/img/angularjs-logo.png',
       personalBests: [
         {
@@ -47,7 +41,7 @@ swimmersApp.controller('SwimmerDetailsController',
         },
         {
           event: {
-            distance: '800m',
+            distance: '800',
             discipline: 'Freestyle'
           },
           time: '11.12.23',
@@ -57,13 +51,4 @@ swimmersApp.controller('SwimmerDetailsController',
         }
        ]
     };
-    
-/*    $scope.upVoteSession = function(session) {
-      session.upVoteCount++;
-    };
-    
-    $scope.downVoteSession = function(session) {
-      session.upVoteCount--;
-    }
-*/
   });
