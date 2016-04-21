@@ -1,10 +1,29 @@
 'use strict';
 
-swimmersApp.controller('EditSwimmerController', function EditSwimmerController($scope) {
+swimmersApp.controller('SearchSwimmerController', function SearchSwimmerController($scope) {
   $scope.searchSwimmer = function(swimmer, newSwimmerForm) {
     if(newSwimmerForm.$valid) {
-      window.alert('swimmer' + swimmer.name + ' searched!');
-      window.location = '/SwimmerDetails.html';
+      if(swimmer.name.startsWith("Elias") ) {
+        $scope.searchResult = [
+          {
+            id: '1234',
+            name: 'Elias Mord',
+            yearOfBirth: '2003',
+            club: 'SSK'
+          },
+          {
+            id: '98988',
+            name: 'Elias Skeppstedt',
+            yearOfBirth: '2003',
+            club: 'TSS'
+          }
+        ]
+      } else {
+        $scope.searchResult = [
+        ]
+        $scope.alertMessage = "No swimmer found for {{swimmer.name}}";
+      }
+      //window.location = '/SwimmerDetails.html';
     }
   };
   

@@ -11,7 +11,7 @@
       <div class="navbar">
         <div class="navbar-inner">
           <ul class="nav">
-            <li><a href="/NewSwimmer.html">Search Swimmer</a></li>
+            <li><a href="/SearchSwimmer.html">Search Swimmer</a></li>
             <li><a href="/SwimmerDetails.html">Swimmer Details</a></li>
           </ul>
         </div>
@@ -20,25 +20,51 @@
         <div class="container">
           <h1>New Swimmer</h1>
           <hr>
-          <form name="newSwimmerForm">
-            <fieldset>
+          <form class="row-fluid well" name="newSwimmerForm">
+            <fieldset class="span6">
               <label for="swimmerName">Name:</label>
               <input id="swimmerName" type="text" required ng-model="swimmer.name" placeholder="Name of your swimmer..." />
               <label for="swimmerDateOfBirth">Year of Birth:</label>
               <input id="swimmerDateOfBirth" type="text" required ng-pattern="\d\d\d\d" ng-model="swimmer.dateOfBirth" placeholder="format yyyy" />
-              <!--
-              <label for="swimmerImageUrl">Image:</label>
-              <input id="swimmerImageUrl" type="url" ng-model="swimmer.imageUrl" class="input-xlarge" placeholder="url of image..." />
-              -->
             </fieldset>
-            
+            <fieldset class="span6">
+              <label for="swimmerClub">Club:</label>
+              <input id="swimmerClub" type="text" required ng-model="swimmer.club" placeholder="Club" />
+              <br>
+            </fieldset>
+            <fieldset class="span6">
+              <button type="submit" style="margin-top:20px" ng-disabled="newSwimmerForm.$invalid" ng-click="searchSwimmer(swimmer, newSwimmerForm)" class="btn btn-primary">Save</button>
+              <button type="button" style="margin-top:20px" ng-click="cancelSwimmer()" class="btn btn-default">Cancel</button>
+            </fieldset>
+
+<!--
             <img ng-src="{{swimmer.imageUrl}}" />
             <br />
-            <br />
-            
-            <button type="submit" ng-disabled="newSwimmerForm.$invalid" ng-click="searchSwimmer(swimmer, newSwimmerForm)" class="btn btn-primary">Save</button>
-            <button type="button" ng-click="cancelSwimmer()" class="btn btn-default">Cancel</button>
+-->
           </form>
+
+          <!--Show search result-->
+          <ul class="thumbnails">
+          <li ng-repeat="swimmer in searchResult | orderBy:id | limitTo:10">
+
+            <div class="row session">
+              <div class="well span9">
+                <h4 class="well-title">{{swimmer.name}}</h4>
+                <span>Club: {{swimmer.club}}</span><br />
+                <span>Year of birth: {{swimmer.yearOfBirth}}</span><br />
+                <span>Id: {{swimmer.id}}</span>
+              </div>
+            </div>
+          </li>
+          </ul>
+
+          <!--Show alert if nothing found-->
+          <div ng-show="!searchResult.length">Nothing found</div>
+          <!--<div collapse="isCollapsed" class="alert"<\div>-->
+          <!--<div class="alert alert-info">-->
+            <!--<strong>Search</strong> {{$scope.alertMessage}}-->
+          <!--</div>-->
+
         </div>
       </div>
     </div>

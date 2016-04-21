@@ -1,7 +1,7 @@
 'use strict';
 
-swimmersApp.controller('SwimmerController', 
-  function SwimmerController($scope) {
+swimmersApp.controller('SwimmerDetailsController',
+  function SwimmerDetailsController($scope) {
     $scope.sortorder = 'name';
     $scope.swimmer = {
       id: '1234',
