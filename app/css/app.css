@@ -1,4 +1,7 @@
 /* app css stylesheet */
+[ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none;
+}
 .hoverwell:hover {
   background-color: #52575c;
   cursor: pointer;

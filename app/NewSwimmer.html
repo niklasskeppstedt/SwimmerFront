@@ -11,37 +11,31 @@
       <div class="navbar">
         <div class="navbar-inner">
           <ul class="nav">
-            <li><a href="/NewSwimmer.html">Create Swimmer</a></li>
+            <li><a href="/NewSwimmer.html">Search Swimmer</a></li>
           </ul>
         </div>
       </div>
-      <div ng-controller="EditSwimmerController" style="padding-left:20px; padding-right:20px">
+      <div ng-controller="SearchSwimmerController" style="padding-left:20px; padding-right:20px">
         <div class="container">
           <h1>New Swimmer</h1>
           <hr>
           <form name="newSwimmerForm">
             <fieldset>
-              <label for="swimmerName">Swimmer Name:</label>
+              <label for="swimmerName">Name:</label>
               <input id="swimmerName" type="text" required ng-model="swimmer.name" placeholder="Name of your swimmer..." />
-              <label for="swimmerDate">Swimmer Date:</label>
-              <input id="swimmerDate" type="text" required ng-pattern="/\d\d/\d\d/\d\d\d\d/" ng-model="swimmer.date" placeholder="format (mm/dd/yyyy)..." />
-              <label for="swimmerTime">Swimmer Time:</label>
-              <input id="swimmerTime" type="text" ng-model="swimmer.time" placeholder="start and end time..." />
-              <label for="swimmerLocation">Swimmer Location:</label>
-              <input id="swimmerLocation" type="text" ng-model="swimmer.location.address" placeholder="Address of swimmer..." />
-              <br />
-              <input id="swimmerCity" type="text" ng-model="swimmer.location.city" class="input-small" placeholder="City..." />
-              <input id="swimmerProvince" type="text" ng-model="swimmer.location.province" class="input-small" placeholder="Province..." />
-              <div>{{swimmer.name}}</div>
+              <label for="swimmerDateOfBirth">Year of Birth:</label>
+              <input id="swimmerDateOfBirth" type="text" required ng-pattern="\d\d\d\d" ng-model="swimmer.dateOfBirth" placeholder="format yyyy" />
+              <!--
               <label for="swimmerImageUrl">Image:</label>
               <input id="swimmerImageUrl" type="url" ng-model="swimmer.imageUrl" class="input-xlarge" placeholder="url of image..." />
+              -->
             </fieldset>
             
             <img ng-src="{{swimmer.imageUrl}}" />
             <br />
             <br />
             
-            <button type="submit" ng-disabled="newSwimmerForm.$invalid" ng-click="saveSwimmer(swimmer, newSwimmerForm)" class="btn btn-primary">Save</button>
+            <button type="submit" ng-disabled="newSwimmerForm.$invalid" ng-click="searchSwimmer(swimmer, newSwimmerForm)" class="btn btn-primary">Save</button>
             <button type="button" ng-click="cancelSwimmer()" class="btn btn-default">Cancel</button>
           </form>
         </div>

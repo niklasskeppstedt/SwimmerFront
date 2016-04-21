@@ -1,9 +1,10 @@
 'use strict';
 
 swimmersApp.controller('EditSwimmerController', function EditSwimmerController($scope) {
-  $scope.saveSwimmer = function(swimmer, newSwimmerForm) {
+  $scope.searchSwimmer = function(swimmer, newSwimmerForm) {
     if(newSwimmerForm.$valid) {
-      window.alert('swimmer' + swimmer.name + ' saved!');
+      window.alert('swimmer' + swimmer.name + ' searched!');
+      window.location = '/SwimmerDetails.html';
     }
   };
   
