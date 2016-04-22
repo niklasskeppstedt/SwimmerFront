@@ -23,13 +23,13 @@
           <form class="row-fluid well" name="newSwimmerForm">
             <fieldset class="span6">
               <label for="swimmerName">Name:</label>
-              <input id="swimmerName" type="text" required ng-model="swimmer.name" placeholder="Name of your swimmer..." />
+              <input id="swimmerName" type="text" ng-model="swimmer.name" placeholder="Name of your swimmer..." />
               <label for="swimmerDateOfBirth">Year of Birth:</label>
-              <input id="swimmerDateOfBirth" type="text" required ng-pattern="\d\d\d\d" ng-model="swimmer.dateOfBirth" placeholder="format yyyy" />
+              <input id="swimmerDateOfBirth" type="text" ng-model="swimmer.yearOfBirth" placeholder="Year of birth" />
             </fieldset>
             <fieldset class="span6">
               <label for="swimmerClub">Club:</label>
-              <input id="swimmerClub" type="text" required ng-model="swimmer.club" placeholder="Club" />
+              <input id="swimmerClub" type="text" ng-model="swimmer.club" placeholder="Club" />
               <br>
             </fieldset>
             <fieldset class="span6">
@@ -60,7 +60,7 @@
           <!--Show alert if nothing found-->
           <div ng-show="noHitsReturned">
             <div class="alert alert-warning">
-            <strong>Search</strong> Returned no hits
+              No hits returned, try to narrow your search!
             </div>
           </div>
 
