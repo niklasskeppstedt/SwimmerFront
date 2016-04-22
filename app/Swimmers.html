@@ -20,7 +20,7 @@
         <h3>Swimmers</h3>
         <ul class="thumbnails">
           <li ng-repeat="swimmer in swimmers">
-            <div class="row personalBest">
+            <div class="row personalBest" ng-click="showSwimmerDetails(swimmer)">
               <div class="well span9">
                 <h4 class="well-title">{{swimmer.name}}</h4>
                 <span>Club: {{swimmer.club}}</span><br />

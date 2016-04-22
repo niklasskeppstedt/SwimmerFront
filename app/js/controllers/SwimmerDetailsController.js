@@ -2,14 +2,14 @@
 
 swimmersApp.controller('SwimmerDetailsController',
   function SwimmerDetailsController($scope, $http) {
-    $scope.swimmerid = "000";
-    alert("Get swimmer with id " + $scope.swimmerid + " accessing url " + 'http://localhost:7000/swimmers/' + $scope.swimmerid);
+    var queryDict = {};
+    location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]});
     $http(
     {
       method: 'GET',
-      url: 'http://localhost:7000/swimmers/' + $scope.swimmerid
+      url: 'http://localhost:7000/swimmers/' + queryDict.id
     }).then(function successCallback(response) {
-      alert("Got data " + JSON.stringify(response));
+      //alert("Got data " + JSON.stringify(response));
       response.data.personalBests = [
         {
           event: {
