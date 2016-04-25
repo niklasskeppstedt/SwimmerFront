@@ -2,10 +2,10 @@
     <div class="jumbotron text-center">
     <div class="container">
       <div style="padding-left:20px; padding-right:20px">
-        <!-- If swimmer has imageUrl, not implmented <img ng-src="{{swimmer.imageUrl}}" alt="{{swimmer.name}}">--> 
+        <!-- If swimmer has imageUrl, not implmented <img ng-src="{{swimmer.imageUrl}}" alt="{{swimmer.name}}">-->
         <div class="row">
           <div class="span11">
-            <h2>{{swimmer.name | uppercase}} </h2>
+            <h1>{{swimmer.name}} </h1>
           </div>
         </div>
       
@@ -28,23 +28,21 @@
           <option value="Butterfly" >Butterfly</option>
           <option value="Backstroke" >Backstroke</option>
         </select>
-        <ul class="thumbnails">
           <!--orderBy:pbSortOrder-->
-          <container ng-repeat="personalBest in swimmer.personalBests | limitTo:10 | filter:discipline" >
+          <div ng-repeat="personalBest in swimmer.personalBests | limitTo:10 | filter:discipline" >
             <div class="row personalBest">
-              <div class="well span9">
-                <!--<h4 class="well-title">{{personalBest.event}}</h4>
-                <span>Time: 23.00</span><br />
-                <span>Competition: Vårsimiaden</span><br />
-                <span>Date: 200160325</span>-->
-                <h4 class="well-title">{{personalBest.event.distance.distance}} {{personalBest.event.discipline.discipline}}</h4>
-                <span>Time: {{personalBest.time}}</span><br />
-                <span>Competition: {{personalBest.competition}}</span><br />
-                <span>Date: {{personalBest.date}}</span>
-              </div>
+                <div class="panel panel-default" ng-click="showSwimmerDetails(swimmer)">
+                  <div class="panel-heading">
+                    <h4 class="well-title">{{personalBest.event.distance.distance}} {{personalBest.event.discipline.discipline}}</h4>
+                  </div>
+                  <div class="panel-body">
+                    <span>Time: {{personalBest.time}}</span><br />
+                    <span>Competition: {{personalBest.competition}}</span><br />
+                    <span>Date: {{personalBest.date}}</span>
+                  </div>
+                </div>
             </div>
-          </container>
-        </ul>
+          </div>
       </div>
     </div>
   </div>
