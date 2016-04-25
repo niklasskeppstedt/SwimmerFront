@@ -2,7 +2,6 @@
 swimmersApp.controller('SwimmersController',
   function SwimmersController($scope, $http) {
   	$scope.showSwimmerDetails = function(swimmer) {
-        alert("Clicked swimmer with name " + swimmer.name);
         window.location = '/SwimmerDetails.html?id=' + swimmer.id;
     }
 

@@ -1,0 +1,51 @@
+<!-- about.html -->
+    <div class="jumbotron text-center">
+    <div class="container">
+      <div style="padding-left:20px; padding-right:20px">
+        <!-- If swimmer has imageUrl, not implmented <img ng-src="{{swimmer.imageUrl}}" alt="{{swimmer.name}}">--> 
+        <div class="row">
+          <div class="span11">
+            <h2>{{swimmer.name | uppercase}} </h2>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="span3">
+            <div><strong>Id:</strong> {{swimmer.id}}</div>
+            <div><strong>Born:</strong> {{swimmer.yearOfBirth}}</div>
+            <div><strong>Club:</strong> {{swimmer.club}}</div>
+          </div>
+        </div>
+        
+        <hr>
+        
+        <h3>Personal bests</h3>
+        Show:
+        <select name="" id="" ng-model="discipline" class="input-medium">
+          <option value="" selected>All</option>
+          <option value="Breaststroke" >Breaststroke</option>
+          <option value="Freestyle" >Freestyle</option>
+          <option value="Butterfly" >Butterfly</option>
+          <option value="Backstroke" >Backstroke</option>
+        </select>
+        <ul class="thumbnails">
+          <!--orderBy:pbSortOrder-->
+          <container ng-repeat="personalBest in swimmer.personalBests | limitTo:10 | filter:discipline" >
+            <div class="row personalBest">
+              <div class="well span9">
+                <!--<h4 class="well-title">{{personalBest.event}}</h4>
+                <span>Time: 23.00</span><br />
+                <span>Competition: Vårsimiaden</span><br />
+                <span>Date: 200160325</span>-->
+                <h4 class="well-title">{{personalBest.event.distance.distance}} {{personalBest.event.discipline.discipline}}</h4>
+                <span>Time: {{personalBest.time}}</span><br />
+                <span>Competition: {{personalBest.competition}}</span><br />
+                <span>Date: {{personalBest.date}}</span>
+              </div>
+            </div>
+          </container>
+        </ul>
+      </div>
+    </div>
+  </div>
+
