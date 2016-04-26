@@ -72,20 +72,15 @@ scotchApp.controller('aboutController', function($scope, $location) {
 
 });
 
-/**function loginController($scope, userService) {
-    alert("Before login");
-    $scope.hellos = [
-        $scope.fromService = userService.login($scope.username, $scope.password, this)
-    ];
-    alert("After login");
-}**/
-
-
-scotchApp.controller('loginController', function($scope, userService) {
+scotchApp.controller('loginController', function($scope, $location, userService) {
     $scope.errorMessage = 'This is an errormessage text';
-    $scope.login = function($scope)
+    $scope.login = function()
     {
-        userService.login(username, password, this);
+        user = userService.login($scope.username, $scope.password, this);
+        alert("login returned " + JSON.stringify(user));
+        if(user != null) {
+            $location.path("/swimmers");
+        }
     }
 
 });
@@ -114,10 +109,9 @@ scotchApp.controller('swimmerController', function($scope, $http, $location) {
 });
 
 /**
-*
-*/
+ *User service
+ */
 scotchApp.service('userService', ['$cookieStore','$http', function($cookieStore,$http) {
-    alert("Creating userService");
     this.user = {};
 
     this.storeToSession = function() {
@@ -132,28 +126,31 @@ scotchApp.service('userService', ['$cookieStore','$http', function($cookieStore,
     };
 
     this.loadCurrentUser = function(loadCurrentUser) {
-        /* $http get to load user info with given header */
+        /* $http get to load user info < with given header */
     };
 
     this.login = function(email,password,ctrl) {
-        alert("In login service");
         var userIn = {
-            username : username,
+            username : email,
             password : password
         }
         var that = this;
-        $http.post('http://localhost:7000/users/login', userIn).success(function(data) {
-            if (data.success === true) {
+        alert("Logging in with " + JSON.stringify(userIn))
+        $http.post('http://localhost:7000/users/login', JSON.stringify(userIn)).success(function(data) {
+//            if (data.success == true) {
                 that.user.username = userIn.username;
                 that.user.header = btoa(userIn.username + ':' + userIn.password);
                 ctrl.errorMessage = '';
                 that.storeToSession();
-            } else {
-                ctrl.errorMessage = 'Something went bad';
-            }
+                alert("Returning " + JSON.stringify(that.user));
+                return that.user;
+  //          } else {
+    //            ctrl.errorMessage = 'Something went bad: ' + JSON.stringify(data) ;
+    //        }
         }).error(function(arg) {
-            ctrl.errorMessage = 'Something went very bad';
+            ctrl.errorMessage = 'Something went very bad, logging in anyway ' + JSON.stringify(arg);
         });
+        return null;
     }
 
     this.logout = function() {
