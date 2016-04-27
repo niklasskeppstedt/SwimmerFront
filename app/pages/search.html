@@ -1,0 +1,49 @@
+<div style="padding-left:20px; padding-right:20px">
+    <div class="container">
+        <h1>Search Swimmer</h1>
+        <hr>
+        <form class="row-fluid well" name="newSwimmerForm">
+            <fieldset class="span6">
+                <label for="swimmerName">Name:</label>
+                <input id="swimmerName" type="text" ng-model="swimmer.name" placeholder="Name of your swimmer..." />
+                <label for="swimmerDateOfBirth">Year of Birth:</label>
+                <input id="swimmerDateOfBirth" type="text" ng-model="swimmer.yearOfBirth" placeholder="Year of birth" />
+            </fieldset>
+            <fieldset class="span6">
+                <label for="swimmerClub">Club:</label>
+                <input id="swimmerClub" type="text" ng-model="swimmer.club" placeholder="Club" />
+                <br>
+            </fieldset>
+            <fieldset class="span6">
+                <button type="submit" style="margin-top:20px" ng-disabled="newSwimmerForm.$invalid" ng-click="searchSwimmer(swimmer, newSwimmerForm)" class="btn btn-primary">Search</button>
+                <button type="button" style="margin-top:20px" ng-click="cancelSwimmer()" class="btn btn-default">Cancel</button>
+            </fieldset>
+
+            <!--
+                        <img ng-src="{{swimmer.imageUrl}}" />
+                        <br />
+            -->
+        </form>
+
+        <!--Show search result-->
+        <div ng-cloak ng-repeat="swimmer in searchResult | orderBy:id | limitTo:10">
+            <div class="well span9">
+                <h4 class="well-title">{{swimmer.name}}</h4>
+                <span>Club: {{swimmer.club}}</span><br />
+                <span>Year of birth: {{swimmer.yearOfBirth}}</span><br />
+                <span>Id: {{swimmer.id}}</span>
+                <div class="col-sm-7">
+                    <button type="submit" class="btn btn-default" ng-click="save(swimmer)"> Save </button>
+                </div>
+            </div>
+        </div>
+
+        <!--Show alert if nothing found-->
+        <div ng-show="noHitsReturned">
+            <div class="alert alert-warning">
+                No hits returned, try to narrow your search!
+            </div>
+        </div>
+
+    </div>
+</div>

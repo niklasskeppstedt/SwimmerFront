@@ -36,6 +36,12 @@ scotchApp.config(function($routeProvider) {
         .when('/login', {
             templateUrl : 'pages/login.html',
             controller  : 'loginController'
+        })
+
+        // route for the search page
+        .when('/search', {
+            templateUrl : 'pages/search.html',
+            controller  : 'searchController'
         });
 
 });
@@ -90,11 +96,10 @@ scotchApp.controller('contactController', function($scope) {
 });
 
 scotchApp.controller('swimmerController', function($scope, $http, $location) {
-    // Start REST call
     $http(
     {
       method: 'GET',
-      url: 'http://localhost:7000/swimmers/' + $location.search().id + '/personalbests'
+      url: 'http://localhost:7000/swimmers/' + $location.search().id
     }).then(function successCallback(response) {
       $scope.swimmer = response.data;
     }, function errorCallback(response) {
@@ -104,8 +109,46 @@ scotchApp.controller('swimmerController', function($scope, $http, $location) {
       else
         $scope.errorText = "Unknown server error: " + response.config.url + " " + response.data.message;
     });
-    //End REST call
+});
 
+scotchApp.controller('searchController', function ($scope, $http, $location) {
+    $scope.searchResult = [];
+    $scope.noHitsReturned = false;
+    $scope.searchSwimmer = function(swimmer, newSwimmerForm) {
+        if(newSwimmerForm.$valid) {
+            $http.post('http://localhost:7000/swimmers/search', JSON.stringify(swimmer))
+                .success(function (data) {
+                    $scope.noHitsReturned = data.length == 0;
+                    $scope.searchResult = data;
+                })
+                .error(function (data, status) {
+                    alert("Got error " + JSON.stringify(data) + status);
+                });
+        } else {
+            alert("Search phrases not valid");
+        }
+    };
+
+    $scope.save = function(swimmer) {
+        outSwimmer = {
+            id: swimmer.id,
+            name: swimmer.name,
+            club: swimmer.club,
+            yearOfBirth: swimmer.yearOfBirth
+        }
+        $http.post('http://localhost:7000/swimmers', JSON.stringify(outSwimmer))
+            .success(function (data) {
+                $location.path("/");
+            })
+            .error(function (data, status) {
+                alert("Got error " + JSON.stringify(data) + status);
+            });
+    };
+
+
+    $scope.cancelSwimmer = function() {
+        window.path("/");
+    }
 });
 
 /**
