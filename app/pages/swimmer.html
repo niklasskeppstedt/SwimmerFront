@@ -23,13 +23,13 @@
         Show:
         <select name="" id="" ng-model="discipline" class="input-medium">
           <option value="" selected>All</option>
-          <option value="Breaststroke" >Breaststroke</option>
-          <option value="Freestyle" >Freestyle</option>
-          <option value="Butterfly" >Butterfly</option>
-          <option value="Backstroke" >Backstroke</option>
+          <option value="Bröstsim" >Bröstsim</option>
+          <option value="Frisim" >Frisim</option>
+          <option value="Fjärilssim" >Fjärilssim</option>
+          <option value="Ryggsim" >Ryggsim</option>
         </select>
           <!--orderBy:pbSortOrder-->
-          <div ng-repeat="personalBest in swimmer.personalBests | limitTo:10 | filter:discipline" >
+          <div ng-repeat="personalBest in swimmer.personalBests | limitTo:20 | filter:discipline" >
             <div class="row personalBest">
                 <div class="panel panel-default" ng-click="showSwimmerDetails(swimmer)">
                   <div class="panel-heading">
