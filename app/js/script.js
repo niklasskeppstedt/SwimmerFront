@@ -2,7 +2,22 @@
 
 // create the module and name it scotchApp
     // also include ngRoute for all our routing needs
-var scotchApp = angular.module('scotchApp', ['ngRoute','ngCookies']);
+var scotchApp = angular.module('scotchApp', ['ngRoute','ngCookies'])
+
+/*
+scotchApp.run(
+    angular.element($window).on('onbeforeunload', function (event) {
+        // do whatever you want in here before the page unloads.        
+
+        // the following line of code will prevent reload or navigating away.
+        alert("Aha trying to navigate away");
+        event.preventDefault();
+    })
+);*/
+/*
+scotchApp.run(function($window) {
+    angular.element($window).on('beforeunload', event.preventDefault());
+});*/
 
 // configure our routes
 scotchApp.config(function($routeProvider) {
@@ -10,6 +25,12 @@ scotchApp.config(function($routeProvider) {
 
         // route for the home page
         .when('/', {
+            templateUrl : 'pages/swimmerlist.html',
+            controller  : 'swimmersController'
+        })
+
+        // route for the swimmers page, same as home
+        .when('/swimmers', {
             templateUrl : 'pages/swimmerlist.html',
             controller  : 'swimmersController'
         })
@@ -38,6 +59,12 @@ scotchApp.config(function($routeProvider) {
             controller  : 'loginController'
         })
 
+        // route for the signup page
+        .when('/signup', {
+            templateUrl : 'pages/signup.html',
+            controller  : 'signupController'
+        })
+
         // route for the search page
         .when('/search', {
             templateUrl : 'pages/search.html',
@@ -47,7 +74,11 @@ scotchApp.config(function($routeProvider) {
 });
 
 // create the controller and inject Angular's $scope
-scotchApp.controller('swimmersController', function($scope, $http, $location) {
+scotchApp.controller('swimmersController', function($scope, $http, $location, userService) {
+    if(userService.user.header == null) {
+        $location.path("/login").search({page: ""}); 
+        return;
+    }
     $http({
         method: 'GET',
         url: 'http://localhost:7000/swimmers'
@@ -78,15 +109,32 @@ scotchApp.controller('aboutController', function($scope, $location) {
 
 });
 
+scotchApp.controller('signupController', function($scope, $location) {
+    $scope.message = 'This is the signup page...';
+
+});
+
 scotchApp.controller('loginController', function($scope, $location, userService) {
-    $scope.errorMessage = 'This is an errormessage text';
-    $scope.login = function()
-    {
+    $scope.errorMessage = '';
+    $scope.login = function() {
         user = userService.login($scope.username, $scope.password, this);
-        alert("login returned " + JSON.stringify(user));
-        if(user != null) {
-            $location.path("/swimmers");
+    }
+
+    $scope.loginSuccess = function() {
+        page = $location.search().page;
+        possibleId = $location.search().id;
+        //reset search params
+        $location.search({})
+        $location.path("/" + page).search({"id": possibleId});     
+    }
+    $scope.loginFailed = function(errorMessage) {
+        if($scope.errorMessage.length > 0) {
+            $scope.errorMessage = "";     
         }
+        $scope.errorMessage = errorMessage;     
+    }
+    $scope.signup = function() {
+        $location.path("/signup");     
     }
 
 });
@@ -95,34 +143,42 @@ scotchApp.controller('contactController', function($scope) {
     $scope.message = 'niklas.skeppstedt@gmail.com';
 });
 
-scotchApp.controller('swimmerController', function($scope, $http, $location) {
-    $http(
-    {
-      method: 'GET',
-      url: 'http://localhost:7000/swimmers/' + $location.search().id
-    }).then(function successCallback(response) {
-      $scope.swimmer = response.data;
-    }, function errorCallback(response) {
-      if(response.status == 0) {
-        $scope.errorText = "No response from server. Could not fetch swimmer";
-      }
-      else
-        $scope.errorText = "Unknown server error: " + response.config.url + " " + response.data.message;
-    });
+scotchApp.controller('swimmerController', function($scope, $http, $location, userService) {
+    if(userService.user.header == null) {
+        $location.path("/login").search({page: "swimmer", id: $location.search().id}); 
+        return;
+    }
+    $http.get('http://localhost:7000/swimmers/' + $location.search().id, {headers: {'Authorization': 'Basic ' + userService.user.header}})
+        .success(function (data) {
+            $scope.swimmer = data;
+        })
+        .error(function (data, status) {
+          alert("Error in swimmersController " + JSON.stringify(data) + ":::" + JSON.stringify(status));
+          if(response.status == 0) {
+            $scope.errorText = "No response from server. Could not fetch swimmer";
+          }
+          else
+            $scope.errorText = "Unknown server error: " + response.config.url + " " + response.data.message;
+        });
 });
 
-scotchApp.controller('searchController', function ($scope, $http, $location) {
+scotchApp.controller('searchController', function ($scope, $http, $location, userService) {
+    if(userService.user.header == null) {
+        $location.path("/login").search({page: "search"});;
+        return;
+    }
+
     $scope.searchResult = [];
     $scope.noHitsReturned = false;
     $scope.searchSwimmer = function(swimmer, newSwimmerForm) {
         if(newSwimmerForm.$valid) {
-            $http.post('http://localhost:7000/swimmers/search', JSON.stringify(swimmer))
+            $http.post('http://localhost:7000/swimmers/search', JSON.stringify(swimmer), {headers: {'Authorization': 'Basic ' + userService.user.header}})
                 .success(function (data) {
                     $scope.noHitsReturned = data.length == 0;
                     $scope.searchResult = data;
                 })
                 .error(function (data, status) {
-                    alert("Got error " + JSON.stringify(data) + status);
+                    alert("Something is wrong: " + JSON.stringify(data) + " " + JSON.stringify(status));;
                 });
         } else {
             alert("Search phrases not valid");
@@ -132,7 +188,8 @@ scotchApp.controller('searchController', function ($scope, $http, $location) {
     $scope.save = function(swimmer) {
         outSwimmer = {
             id: swimmer.id,
-            name: swimmer.name,
+            firstName: swimmer.firstName,
+            lastName: swimmer.lastName,
             club: swimmer.club,
             yearOfBirth: swimmer.yearOfBirth
         }
@@ -147,7 +204,7 @@ scotchApp.controller('searchController', function ($scope, $http, $location) {
 
 
     $scope.cancelSwimmer = function() {
-        window.path("/");
+        location;
     }
 });
 
@@ -178,22 +235,21 @@ scotchApp.service('userService', ['$cookieStore','$http', function($cookieStore,
             password : password
         }
         var that = this;
-        alert("Logging in with " + JSON.stringify(userIn))
         $http.post('http://localhost:7000/users/login', JSON.stringify(userIn)).success(function(data) {
-//            if (data.success == true) {
-                that.user.username = userIn.username;
-                that.user.header = btoa(userIn.username + ':' + userIn.password);
-                ctrl.errorMessage = '';
-                that.storeToSession();
-                alert("Returning " + JSON.stringify(that.user));
-                return that.user;
-  //          } else {
-    //            ctrl.errorMessage = 'Something went bad: ' + JSON.stringify(data) ;
-    //        }
+            if(data.name == null) {
+                ctrl.loginFailed("Could not login using given credentials");
+                return;
+            }
+            that.user.username = userIn.username;
+            that.user.header = btoa(userIn.username + ':' + userIn.password);
+            ctrl.errorMessage = '';
+            that.storeToSession();
+            ctrl.loginSuccess();
+//            return that.user;
         }).error(function(arg) {
-            ctrl.errorMessage = 'Something went very bad, logging in anyway ' + JSON.stringify(arg);
+            ctrl.errorMessage('Something went very bad, logging in anyway ');
         });
-        return null;
+//        return null;
     }
 
     this.logout = function() {

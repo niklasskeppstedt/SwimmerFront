@@ -4,12 +4,14 @@
         <hr>
         <form class="row-fluid well" name="newSwimmerForm">
             <fieldset class="span6">
-                <label for="swimmerName">Name:</label>
-                <input id="swimmerName" type="text" ng-model="swimmer.name" placeholder="Name of your swimmer..." />
-                <label for="swimmerDateOfBirth">Year of Birth:</label>
-                <input id="swimmerDateOfBirth" type="text" ng-model="swimmer.yearOfBirth" placeholder="Year of birth" />
+                <label for="swimmerName">First name:</label>
+                <input id="swimmerName" type="text" ng-model="swimmer.firstName" placeholder="First name" />
+                <label for="swimmerName">Last Name:</label>
+                <input id="swimmerName" type="text" ng-model="swimmer.lastName" placeholder="Last name" />
             </fieldset>
             <fieldset class="span6">
+                <label for="swimmerDateOfBirth">Year of Birth:</label>
+                <input id="swimmerDateOfBirth" type="text" ng-model="swimmer.yearOfBirth" placeholder="Year of birth" />
                 <label for="swimmerClub">Club:</label>
                 <input id="swimmerClub" type="text" ng-model="swimmer.club" placeholder="Club" />
                 <br>
@@ -28,7 +30,7 @@
         <!--Show search result-->
         <div ng-cloak ng-repeat="swimmer in searchResult | orderBy:id | limitTo:10">
             <div class="well span9">
-                <h4 class="well-title">{{swimmer.name}}</h4>
+                <h4 class="well-title">{{swimmer.firstName}} {{swimmer.lastName}}</h4>
                 <span>Club: {{swimmer.club}}</span><br />
                 <span>Year of birth: {{swimmer.yearOfBirth}}</span><br />
                 <span>Id: {{swimmer.id}}</span>

@@ -1,14 +1,49 @@
-<div ng-cloak class="col-md-6 col-md-offset-3">
-    {{errorMessage}}
-    <h2>Login</h2>
-    <form name="form" ng-submit="login()" role="form">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username" class="form-control" ng-model="username" required />
-            <label for="password">Password</label>
-            <input type="text" name="password" id="password" class="form-control" ng-model="password" required />
-            <button type="submit" class="btn btn-primary">Login</button>
-            <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-            <!--<a href="#/register" class="btn btn-link">Register</a>-->
-    </form>
+<div style="padding-left:20px; padding-right:20px">
+    <div class="container">
+        <h1>Login</h1>
+        <hr>
 
+        <form class="row-fluid well" name="form" ng-submit="login()" role="form">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" class="form-control" ng-model="username" placeholder="Username" required />
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="form-control" ng-model="password"  placeholder="Password" required />
+                <button type="submit" style="margin-top:20px" ng-disabled="newSwimmerForm.$invalid" class="btn btn-primary">Login</button>
+                <button type="button" style="margin-top:20px" ng-click="signup()" class="btn btn-default">Sign up!</button>
+                <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                <!--<a href="#/register" class="btn btn-link">Register</a>-->
+        </form>
+
+
+
+
+        <!--
+        <form class="row-fluid well" name="newSwimmerForm">
+            <fieldset class="span6">
+                <label for="swimmerName">Name:</label>
+                <input id="swimmerName" type="text" ng-model="swimmer.name" placeholder="Name of your swimmer..." />
+                <label for="swimmerDateOfBirth">Year of Birth:</label>
+                <input id="swimmerDateOfBirth" type="text" ng-model="swimmer.yearOfBirth" placeholder="Year of birth" />
+            </fieldset>
+            <fieldset class="span6">
+                <label for="swimmerClub">Club:</label>
+                <input id="swimmerClub" type="text" ng-model="swimmer.club" placeholder="Club" />
+                <br>
+            </fieldset>
+            <fieldset class="span6">
+                <button type="submit" style="margin-top:20px" ng-disabled="newSwimmerForm.$invalid" ng-click="searchSwimmer(swimmer, newSwimmerForm)" class="btn btn-primary">Search</button>
+                <button type="button" style="margin-top:20px" ng-click="cancelSwimmer()" class="btn btn-default">Cancel</button>
+            </fieldset>
+
+        </form>
+        -->
+
+
+        <!--Show alert if nothing found-->
+        <div class="well span9" ng-show="errorMessage.length > 0">
+            <div class="alert alert-warning fade in">
+                {{errorMessage}}
+            </div>
+        </div>
+    </div>
 </div>
