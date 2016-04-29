@@ -47,5 +47,12 @@
             </div>
         </div>
 
+        <!--Show error if server error-->
+        <div ng-show="errorMessage.lenght > 0">
+            <div class="alert alert-warning">
+                {{errorMessage}}
+            </div>
+        </div>
+
     </div>
 </div>
