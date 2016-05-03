@@ -12,17 +12,17 @@
         <div class="row">
           <div class="span3">
             <div><strong>Id:</strong> {{swimmer.id}}</div>
-            <div><strong>Born:</strong> {{swimmer.yearOfBirth}}</div>
-            <div><strong>Club:</strong> {{swimmer.club}}</div>
+            <div><strong>Född år:</strong> {{swimmer.yearOfBirth}}</div>
+            <div><strong>Klubb:</strong> {{swimmer.club}}</div>
           </div>
         </div>
         
         <hr>
         
-        <h3>Personal bests</h3>
-        Show:
+        <h3>Personbästa</h3>
+        Visa simsätt:
         <select name="" id="" ng-model="discipline" class="input-medium">
-          <option value="" selected>All</option>
+          <option value="" selected>Alla</option>
           <option value="Bröstsim" >Bröstsim</option>
           <option value="Frisim" >Frisim</option>
           <option value="Fjärilssim" >Fjärilssim</option>
@@ -36,9 +36,9 @@
                     <h4 class="well-title">{{personalBest.event.distance.distance}} {{personalBest.event.discipline.discipline}}</h4>
                   </div>
                   <div class="panel-body">
-                    <span>Time: {{personalBest.time}}</span><br />
-                    <span>Competition: {{personalBest.competition}}</span><br />
-                    <span>Date: {{personalBest.date}}</span>
+                    <span>Tid: {{personalBest.time}}</span><br />
+                    <span>Tävling: {{personalBest.competition}}</span><br />
+                    <span>Datum: {{personalBest.date}}</span>
                   </div>
                 </div>
             </div>

@@ -1,24 +1,24 @@
 <div style="padding-left:20px; padding-right:20px">
     <div class="container">
-        <h1>Search Swimmer</h1>
+        <h1>Sök simmare</h1>
         <hr>
         <form class="row-fluid well" name="newSwimmerForm">
             <fieldset class="span6">
-                <label for="swimmerName">First name:</label>
-                <input id="swimmerName" type="text" ng-model="swimmer.firstName" placeholder="First name" />
-                <label for="swimmerName">Last Name:</label>
-                <input id="swimmerName" type="text" ng-model="swimmer.lastName" placeholder="Last name" />
+                <label for="swimmerName">Förnamn:</label>
+                <input id="swimmerName" type="text" ng-model="swimmer.firstName" placeholder="Förnamn" />
+                <label for="swimmerName">Efternamn:</label>
+                <input id="swimmerName" type="text" ng-model="swimmer.lastName" placeholder="Efternamn" />
             </fieldset>
             <fieldset class="span6">
-                <label for="swimmerDateOfBirth">Year of Birth:</label>
-                <input id="swimmerDateOfBirth" type="text" ng-model="swimmer.yearOfBirth" placeholder="Year of birth" />
-                <label for="swimmerClub">Club:</label>
-                <input id="swimmerClub" type="text" ng-model="swimmer.club" placeholder="Club" />
+                <label for="swimmerDateOfBirth">Född år:</label>
+                <input id="swimmerDateOfBirth" type="text" ng-model="swimmer.yearOfBirth" placeholder="Född år" />
+                <label for="swimmerClub">Klubb:</label>
+                <input id="swimmerClub" type="text" ng-model="swimmer.club" placeholder="Klubb" />
                 <br>
             </fieldset>
             <fieldset class="span6">
-                <button type="submit" style="margin-top:20px" ng-disabled="newSwimmerForm.$invalid" ng-click="searchSwimmer(swimmer, newSwimmerForm)" class="btn btn-primary">Search</button>
-                <button type="button" style="margin-top:20px" ng-click="cancelSwimmer()" class="btn btn-default">Cancel</button>
+                <button type="submit" style="margin-top:20px" ng-disabled="newSwimmerForm.$invalid" ng-click="searchSwimmer(swimmer, newSwimmerForm)" class="btn btn-primary">Sök</button>
+                <button type="button" style="margin-top:20px" ng-click="cancelSwimmer()" class="btn btn-default">Avbryt</button>
             </fieldset>
 
             <!--
@@ -31,11 +31,11 @@
         <div ng-cloak ng-repeat="swimmer in searchResult | orderBy:id | limitTo:10">
             <div class="well span9">
                 <h4 class="well-title">{{swimmer.firstName}} {{swimmer.lastName}}</h4>
-                <span>Club: {{swimmer.club}}</span><br />
-                <span>Year of birth: {{swimmer.yearOfBirth}}</span><br />
+                <span>Klubb: {{swimmer.club}}</span><br />
+                <span>Född år: {{swimmer.yearOfBirth}}</span><br />
                 <span>Id: {{swimmer.id}}</span>
                 <div class="col-sm-7">
-                    <button type="submit" class="btn btn-default" ng-click="save(swimmer)"> Save </button>
+                    <button type="submit" class="btn btn-default" ng-click="save(swimmer)"> Spara </button>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
         <!--Show alert if nothing found-->
         <div ng-show="noHitsReturned">
             <div class="alert alert-warning">
-                No hits returned, try to narrow your search!
+                Inga träffar, försök bredda sökvillkoren
             </div>
         </div>
 

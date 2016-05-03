@@ -70,10 +70,10 @@ scotchApp.controller('swimmersController', function($scope, $http, $location, us
             $scope.swimmers = response.data;
           }, function errorCallback(response) {
               if(response.status == 0) {
-                $scope.errorText = "No response from server. Could not fetch swimmer";
+                $scope.errorText = "Inget svar från servern. Kunde inte hämta simmarna";
               }
               else
-                $scope.errorText = "Unknown server error: " + response.config.url + " " + response.data.message;
+                $scope.errorText = "Okänt serverfel: " + response.config.url + " " + response.data.message;
           });
 
     $scope.showSwimmerDetails = function(swimmer) {
@@ -85,12 +85,12 @@ scotchApp.controller('swimmersController', function($scope, $http, $location, us
 });
 
 scotchApp.controller('aboutController', function($scope, $location) {
-    $scope.message = 'This application is developed by Niklas Skeppstedt to get a handle on DropWizard and AngularJs';
+    $scope.message = 'Swimpy är utvecklad av Niklas Skeppstedt med syfte att testa DropWizard och AngularJs';
 
 });
 
 scotchApp.controller('signupController', function($scope, $location) {
-    $scope.message = 'This is the signup page...';
+    $scope.message = 'På denna sida ska man kunna skapa konton...';
 
 });
 
@@ -145,10 +145,10 @@ scotchApp.controller('swimmerController', function($scope, $http, $location, use
             $scope.swimmer = response.data;
         }, function errorCallback(response) {
           if(response.status == 0) {
-            $scope.errorText = "No response from server. Could not fetch swimmer";
+            $scope.errorText = "Inget svar från servern. Kunde inte hämta simmaren";
           }
           else
-            $scope.errorText = "Unknown server error: " + response.config.url + " " + response.data.message;
+            $scope.errorText = "Okänt serverfel: " + response.config.url + " " + response.data.message;
         });
 });
 
@@ -167,15 +167,16 @@ scotchApp.controller('searchController', function ($scope, $http, $location, use
         if(newSwimmerForm.$valid) {
             httpService.post('http://localhost:7000/swimmers/search', swimmer)
             .then(function successCallback(response) {
+                alert("Wohoo found " + JSON.stringify(response));
                 $scope.noHitsReturned = response.data.length == 0;
-                $scope.swimmer = response.data;
+                $scope.searchResult = response.data;
             }, function errorCallback(response) {
                 alert("Failed search: " + JSON.stringify(response));
                 if(response.status == 0) {
-                    $scope.errorMessage = "Could not contact server at " + response.config.url;
+                    $scope.errorMessage = "Kunde inte kontakta server på adress " + response.config.url;
                 }
                 else
-                    $scope.errorMessage = "Server responded with error: " + response.config.url + " " + response.data.message;
+                    $scope.errorMessage = "Servern på adress " + response.config.url + " svarade med ett fel: " + response.data.message;
             });            
 
 
@@ -190,8 +191,7 @@ scotchApp.controller('searchController', function ($scope, $http, $location, use
                     alert("Something is wrong: " + JSON.stringify(data) + " " + JSON.stringify(status));;
                 });*/
         } else {
-            $scope.errorMessage = "Search phrases not valid";
-            alert("Search phrases not valid");
+            $scope.errorMessage = "Sökvillkoren är inte giltiga";
         }
     };
 
@@ -208,7 +208,7 @@ scotchApp.controller('searchController', function ($scope, $http, $location, use
                 $location.path("/");
             })
             .error(function (data, status) {
-                alert("Got error " + JSON.stringify(data) + status);
+                alert("Något blev fel när simmaren skulle sparas " + JSON.stringify(data) + status);
             });
     };
 
@@ -246,7 +246,7 @@ scotchApp.service('userService', ['$cookieStore','$http', '$timeout', function($
     this.startTimer = function() {
         var that = this;
         $timeout(function() {
-            alert("User will be logged out due to inactivity");
+            alert("Användaren loggas ut på grund av overksamhet");
             that.logout()
         }, 500000);
     };
@@ -263,7 +263,7 @@ scotchApp.service('userService', ['$cookieStore','$http', '$timeout', function($
         var that = this;
         $http.post('http://localhost:7000/users/login', JSON.stringify(userIn)).success(function(data) {
             if(data.name == null) {
-                ctrl.loginFailed("Could not login using given credentials");
+                ctrl.loginFailed("Kunde inte logga in med angivet användarnamn och lösenord");
                 return;
             }
             that.user.username = userIn.username;
@@ -273,7 +273,7 @@ scotchApp.service('userService', ['$cookieStore','$http', '$timeout', function($
             ctrl.loginSuccess();
             that.startTimer();
         }).error(function(arg) {
-            ctrl.loginError('Could not contact server to login...');
+            ctrl.loginError('Kunde inte kontakta servern för att logga in...');
         });
 //        return null;
     }
@@ -292,7 +292,6 @@ scotchApp.service('userService', ['$cookieStore','$http', '$timeout', function($
 scotchApp.service('service2',['service1', function(service1) {}]);
 scotchApp.service('httpService', ['$cookieStore','$http', 'userService', function($cookieStore, $http, userService) {
     this.post = function(url, data) {
-        alert("Posting to url: " + url + " with data: " + JSON.stringify(data));
         return $http({
             method: 'POST',
             url: url,
