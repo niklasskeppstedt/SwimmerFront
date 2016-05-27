@@ -51,6 +51,12 @@ scotchApp.config(function($routeProvider) {
             controller  : 'signupController'
         })
 
+        // route for the competitions page
+        .when('/competitions', {
+            templateUrl : 'pages/competitionlist.html',
+            controller  : 'competitionsController'
+        })
+
         // route for the search page
         .when('/search', {
             templateUrl : 'pages/search.html',
@@ -80,8 +86,41 @@ scotchApp.controller('swimmersController', function($scope, $http, $location, us
         $location.path("/swimmer").search({id: swimmer.id});
     }
 
+});
 
+// create the controller and inject Angular's $scope
+scotchApp.controller('competitionsController', function($scope, $http, $location, httpService) {
+    $scope.currentPage = 0;
+    $scope.pageSize = 10;
+    $scope.competitions = [];
+    $scope.numberOfPages=function(){
+        return Math.ceil($scope.competitions.length/$scope.pageSize);                
+    }
 
+    httpService.get('http://localhost:7000/competitions')
+        .then(function successCallback(response) {
+            $scope.competitions = response.data;
+          }, function errorCallback(response) {
+              if(response.status == 0) {
+                $scope.errorText = "Inget svar från servern. Kunde inte hämta tävlingarna";
+              }
+              else
+                $scope.errorText = "Okänt serverfel: " + response.config.url + " " + response.data.message;
+          });
+
+    $scope.showCompetitionDetails = function(competition) {
+        $location.path("/competition").search({id: competition.id});
+    }
+
+});
+
+//We already have a limitTo filter built-in to angular,
+//let's make a startFrom filter
+scotchApp.filter('startFrom', function() {
+    return function(input, start) {
+        start = +start; //parse to int
+        return input.slice(start);
+    }
 });
 
 scotchApp.controller('aboutController', function($scope, $location) {
@@ -167,7 +206,6 @@ scotchApp.controller('searchController', function ($scope, $http, $location, use
         if(newSwimmerForm.$valid) {
             httpService.post('http://localhost:7000/swimmers/search', swimmer)
             .then(function successCallback(response) {
-                alert("Wohoo found " + JSON.stringify(response));
                 $scope.noHitsReturned = response.data.length == 0;
                 $scope.searchResult = response.data;
             }, function errorCallback(response) {

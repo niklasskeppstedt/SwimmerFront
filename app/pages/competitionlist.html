@@ -1,0 +1,33 @@
+<!-- home.html -->
+<div class="jumbotron text-center">
+    <h1>Tävlingar</h1>
+    <div ng-cloak style="padding-left:20px; padding-right:20px">
+      <label for="filter">Filter:</label>
+      <input id="filter" type="text" ng-model="competitionFilter" placeholder="" />
+    <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+        Previous
+    </button>
+    {{currentPage+1}}/{{numberOfPages()}}
+    <button ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+        Next
+    </button>
+
+      <container ng-repeat="competition in competitions | filter:competitionFilter | startFrom:currentPage*pageSize | limitTo:pageSize">
+  			<div class="panel panel-default" ng-click="showCompetitionDetails(competition)">
+  			  <div class="panel-heading">
+  			    <h3 class="panel-title">{{competition.name}} {{competition.location}}</h3>
+  			  </div>
+  			  <div class="panel-body">
+                  	<span>Arrangerande: {{competition.arrangingClub}}</span><br />
+                  	<span>Datum: {{competition.startDate.dayOfMonth}}/{{competition.startDate.monthValue}} {{competition.startDate.year}}</span><br />
+  			  </div>
+  			</div>
+      </container>
+<!--Show alert if nothing found-->
+        <div ng-show="errorText.length > 0">
+         	<div class="alert alert-error">
+            	{{errorText}}
+          	</div>
+        </div>
+  	</div>
+</div>
